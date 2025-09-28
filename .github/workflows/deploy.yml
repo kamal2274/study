@@ -1,0 +1,13 @@
+name: Deploy the react project 
+on:
+ push:
+  branch :
+   -main 
+jobs: 
+   build:
+    runs-on: ubuntu:latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login -u ${{ secrets.Docker_USERNAME }} -p ${{ secrets.Docker_PASWORDS }}
+      - run: docker build kamal2274/react-test -f Dockerfile.dev
+      - run: docker run -e CI=true kamal2274/react-test npm run test      
